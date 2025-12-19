@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import Input from 'components/common/Input/Input';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import CloseCircleIcon from 'components/common/Icons/CloseCircleIcon';
 
 import * as S from './Search.styled';
@@ -28,6 +28,7 @@ const Search: React.FC<SearchProps> = ({
   extraActions,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
   const ref = useRef<ComponentRef<'input'>>(null);
   const [showIcon, setShowIcon] = useState(!!value || !!searchParams.get('q'));
 
@@ -72,6 +73,7 @@ const Search: React.FC<SearchProps> = ({
 
   return (
     <Input
+      key={onChange ? undefined : location.pathname}
       type="text"
       placeholder={placeholder}
       onChange={handleChange}
