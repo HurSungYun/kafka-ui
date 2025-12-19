@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { clusterTopicNewRelativePath } from 'lib/paths';
 import { PER_PAGE } from 'lib/constants';
 import ClusterContext from 'components/contexts/ClusterContext';
@@ -18,6 +18,7 @@ import useFts from 'components/common/Fts/useFts';
 const ListPage: React.FC = () => {
   const { isReadOnly } = React.useContext(ClusterContext);
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
   useFts('topics');
 
@@ -67,6 +68,7 @@ const ListPage: React.FC = () => {
       </ResourcePageHeading>
       <ControlPanelWrapper hasInput>
         <Search
+          key={location.pathname}
           placeholder="Search by Topic Name"
           extraActions={<Fts resourceName="topics" />}
         />
